@@ -4,8 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".RegistoActivity"
+    android:orientation="horizontal">
 
 
+        <EditText
+            android:id="@+id/RegistoNome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome" />
+
+        <EditText
+            android:id="@+id/RegistoEmail"
+            android:layout_width="224dp"
+            android:layout_height="wrap_content"
+            android:hint="E-mail"
+            android:inputType="textEmailAddress" />
+
+        <EditText
+            android:id="@+id/RegistoSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Senha" />
+
+        <EditText
+            android:id="@+id/RegistoConfirmarSenha"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="Confirmar Senha" />
+
+        <EditText
+            android:id="@+id/RegistoCodigoGinasio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código do Ginásio" />
+
+        <Button
+            android:id="@+id/btnRegistar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Registar" />
 
 </LinearLayout>
