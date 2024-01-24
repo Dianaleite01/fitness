@@ -1,3 +1,8 @@
 <resources>
+
     <string name="app_name">Fit2Go</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login">Entrar</string>
+    <string name="register">Registar</string>
 </resources>
