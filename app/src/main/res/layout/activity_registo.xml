@@ -1,50 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistoActivity"
-    android:orientation="horizontal">
+    tools:context=".RegistoActivity">
 
-
-        <EditText
-            android:id="@+id/RegistoNome"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <EditText
-            android:id="@+id/RegistoEmail"
-            android:layout_width="224dp"
-            android:layout_height="wrap_content"
-            android:hint="E-mail"
-            android:inputType="textEmailAddress" />
+                <EditText
+                    android:id="@+id/RegistoNome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Nome"
+                    android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/RegistoSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Senha" />
+                <EditText
+                    android:id="@+id/RegistoEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="E-mail"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/RegistoConfirmarSenha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="Confirmar Senha" />
+                <EditText
+                    android:id="@+id/RegistoSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Senha"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp" />
 
-        <EditText
-            android:id="@+id/RegistoCodigoGinasio"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Código do Ginásio" />
+                <EditText
+                    android:id="@+id/RegistoConfirmarSenha"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Confirmar Senha"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp" />
 
-        <Button
-            android:id="@+id/btnRegistar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registar" />
+                <EditText
+                    android:id="@+id/RegistoCodigoGinasio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Código do Ginásio"
+                    android:minHeight="48dp" />
 
-</LinearLayout>
+                <Button
+                    android:id="@+id/btnRegistar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Registar" />
+
+        </LinearLayout>
+</ScrollView>
