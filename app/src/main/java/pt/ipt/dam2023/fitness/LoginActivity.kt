@@ -29,8 +29,7 @@ class LoginActivity : AppCompatActivity() {
 
         buttonLogin.setOnClickListener {
             performLogin()
-            val intent = Intent(this, MenuPrincipalActivity::class.java)
-            startActivity(intent)
+
         }
 
         buttonRegister.setOnClickListener {
@@ -61,6 +60,8 @@ class LoginActivity : AppCompatActivity() {
                         if (matchedUser != null) {
                             Log.i("INFO", "User encontrado: $matchedUser")
                             showSuccessMessage()
+
+
                         } else {
                             showErrorMessage("User não encontrado na lista.")
                         }
@@ -80,6 +81,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showSuccessMessage() {
         Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, MenuPrincipalActivity::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun showErrorMessage(message: String) {

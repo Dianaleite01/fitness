@@ -80,14 +80,12 @@ class RegistoActivity : AppCompatActivity() {
                     // Navegar para a atividade de login
                     val intent = Intent(this@RegistoActivity, LoginActivity::class.java)
                     startActivity(intent)
-
                     Log.e("erro","eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
                     finish()
                 } else {
                     Toast.makeText(this@RegistoActivity, "Erro ao realizar registo. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<UserRequest>, t: Throwable) {
                 Toast.makeText(this@RegistoActivity, "Erro de conexão. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_SHORT).show()
             }

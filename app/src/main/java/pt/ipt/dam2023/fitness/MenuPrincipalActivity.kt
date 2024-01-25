@@ -55,6 +55,9 @@ class MenuPrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        //FALTA O LOGOUT (SAIR DA CONTA)
+        logoutCard.setOnClickListener {
+            val intent = Intent(this@MenuPrincipalActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
