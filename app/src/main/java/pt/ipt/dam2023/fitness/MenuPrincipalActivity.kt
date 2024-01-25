@@ -36,7 +36,7 @@ class MenuPrincipalActivity : AppCompatActivity() {
         }
 
         galeriaCard.setOnClickListener {
-            val intent = Intent(this@MenuPrincipalActivity, GaleriaActivity::class.java)
+            val intent = Intent(this@MenuPrincipalActivity, CamaraActivity::class.java)
             startActivity(intent)
         }
 
