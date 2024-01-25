@@ -3,7 +3,6 @@ package pt.ipt.dam2023.fitness
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -11,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.UUID
+
 
 class RegistoActivity : AppCompatActivity() {
     private lateinit var editTextNome: EditText
@@ -19,6 +20,7 @@ class RegistoActivity : AppCompatActivity() {
     private lateinit var editTextConfirmarSenha: EditText
     private lateinit var editTextCodigoGinasio: EditText
     private lateinit var buttonRegistar: Button
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,10 +52,15 @@ class RegistoActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                     if (response.isSuccessful) {
                         val users = response.body()?.users
-                        if (users != null && users.any { it.codGym == codigoGinasio.toInt() }) {
-                            registerUser(nome, email, senha, codigoGinasio.toInt())
-                        } else {
-                            Toast.makeText(this@RegistoActivity, "Código do ginásio inválido.", Toast.LENGTH_SHORT).show()
+                        if (users != null) {
+                            val emailExists = users.any { it.email == email }
+                            if (emailExists) {
+                                Toast.makeText(this@RegistoActivity, "O e-mail já está em uso. Por favor, tente novamente.", Toast.LENGTH_SHORT).show()
+                            } else if (users.any { it.codGym == codigoGinasio.toInt() }) {
+                                registerUser(nome, email, senha, codigoGinasio.toInt())
+                            } else {
+                                Toast.makeText(this@RegistoActivity, "Código do ginásio inválido.", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     } else {
                         Toast.makeText(this@RegistoActivity, "Erro ao verificar o código do ginásio. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
@@ -70,7 +77,8 @@ class RegistoActivity : AppCompatActivity() {
     }
 
     private fun registerUser(nome: String, email: String, senha: String, codigoGinasio: Int) {
-        val newUser = User(email = email, nome = nome, password = senha, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio)
+        val uniqueID = UUID.randomUUID().toString()
+        val newUser = User(id = uniqueID, email = email, nome = nome, password = senha, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio)
         val newUserRequest = UserRequest(newUser)
         val call = ApiService().service().createUser(newUserRequest)
         call.enqueue(object : Callback<UserRequest> {
@@ -80,7 +88,6 @@ class RegistoActivity : AppCompatActivity() {
                     // Navegar para a atividade de login
                     val intent = Intent(this@RegistoActivity, LoginActivity::class.java)
                     startActivity(intent)
-                    Log.e("erro","eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
                     finish()
                 } else {
                     Toast.makeText(this@RegistoActivity, "Erro ao realizar registo. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
@@ -91,5 +98,5 @@ class RegistoActivity : AppCompatActivity() {
             }
         })
     }
-}
 
+}
