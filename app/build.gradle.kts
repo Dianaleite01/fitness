@@ -67,6 +67,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.3.0")
 
     implementation("com.google.android.material:material:1.10.0")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.airbnb.android:lottie:4.2.2")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
