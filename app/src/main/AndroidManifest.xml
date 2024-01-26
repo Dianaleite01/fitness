@@ -40,6 +40,11 @@
             android:theme="@style/Theme.Fitness">
         </activity>
         <activity
+            android:name=".IMCActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fitness">
+        </activity>
+        <activity
             android:name=".CamaraActivity"
             android:exported="false"
             android:theme="@style/Theme.Fitness">

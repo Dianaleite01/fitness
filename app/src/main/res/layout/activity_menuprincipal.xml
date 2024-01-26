@@ -96,7 +96,7 @@
         tools:ignore="MissingConstraints">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/aulasCard"
+            android:id="@+id/imcCard"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
@@ -109,7 +109,7 @@
                 android:background="@color/black">
 
                 <ImageView
-                    android:id="@+id/aulasImage"
+                    android:id="@+id/imc"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="centerCrop"

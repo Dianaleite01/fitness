@@ -1,0 +1,37 @@
+{
+    "planosIMC": [
+      {
+        "id": 1,
+        "tipo": "Abaixo do Peso",
+        "dieta": "Incluir alimentos ricos em proteínas e calorias. Consulte um nutricionista para um plano personalizado.",
+        "exercicio": "Treino leve com foco em ganho de massa muscular.",
+        "imagem_dieta": "dietapesobaixo.jpg",
+        "imagem_exercicio": "exerciciopesobaixo.jpg"
+      },
+      {
+        "id": 2,
+        "tipo": "Peso Normal",
+        "dieta": "Manter uma dieta equilibrada com alimentos de todos os grupos alimentares.",
+        "exercicio": "Treino regular para manter a saúde geral.",
+        "imagem_dieta": "dietapesonormal.jpg",
+        "imagem_exercicio": "exerciciopesonormal"
+      },
+      {
+        "id": 3,
+        "tipo": "Sobrepeso",
+        "dieta": "Reduzir a ingestão de calorias e focar em alimentos nutritivos.",
+        "exercicio": "Treino cardiovascular e exercícios para perda de peso.",
+        "imagem_dieta": "dietasobrepeso.jpg",
+        "imagem_exercicio": "exerciciosobrepeso.jpg"
+      },
+      {
+        "id": 4,
+        "tipo": "Obeso",
+        "dieta": "Plano de dieta com restrição calórica e foco na perda de peso.",
+        "exercicio": "Treino intensivo para queima de calorias e melhoria da aptidão cardiovascular.",
+        "imagem_dieta": "dietaobeso.jpg",
+        "imagem_exercicio": "exercicioobeso.jpg"
+      }
+    ]
+  }
+  

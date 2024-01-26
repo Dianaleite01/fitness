@@ -10,7 +10,7 @@ class MenuPrincipalActivity : AppCompatActivity() {
     //DECLARACAO DAS VARIAVEIS
     private lateinit var qrcodeCard: CardView
     private lateinit var galeriaCard: CardView
-    private lateinit var aulasCard: CardView
+    private lateinit var imcCard: CardView
     private lateinit var corridaCard: CardView
     private lateinit var calendarioCard: CardView
     private lateinit var logoutCard: CardView
@@ -22,7 +22,7 @@ class MenuPrincipalActivity : AppCompatActivity() {
         //INICIALIZA AS REFERENCIAS PARA OS CARDVIEW USANDO FINDVIEWBYID
         qrcodeCard = findViewById(R.id.qrcodeCard)
         galeriaCard = findViewById(R.id.galeriaCard)
-        aulasCard = findViewById(R.id.aulasCard)
+        imcCard = findViewById(R.id.imcCard)
         corridaCard = findViewById(R.id.corridaCard)
         calendarioCard = findViewById(R.id.calendarioCard)
         logoutCard = findViewById(R.id.logoutCard)
@@ -40,8 +40,8 @@ class MenuPrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        aulasCard.setOnClickListener {
-            val intent = Intent(this@MenuPrincipalActivity, AulasActivity::class.java)
+        imcCard.setOnClickListener {
+            val intent = Intent(this@MenuPrincipalActivity, IMCActivity::class.java)
             startActivity(intent)
         }
 

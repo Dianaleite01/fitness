@@ -1,4 +1,3 @@
-// RegistoActivity.kt
 package pt.ipt.dam2023.fitness
 
 import android.content.Intent
@@ -10,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.security.MessageDigest
 import java.util.UUID
-
 
 class RegistoActivity : AppCompatActivity() {
     private lateinit var editTextNome: EditText
@@ -20,7 +19,6 @@ class RegistoActivity : AppCompatActivity() {
     private lateinit var editTextConfirmarSenha: EditText
     private lateinit var editTextCodigoGinasio: EditText
     private lateinit var buttonRegistar: Button
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +33,12 @@ class RegistoActivity : AppCompatActivity() {
 
         buttonRegistar.setOnClickListener {
             performRegistration()
-
         }
+    }
+
+    private fun hashPassword(password: String): String {
+        val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
     }
 
     private fun performRegistration() {
@@ -103,9 +105,11 @@ class RegistoActivity : AppCompatActivity() {
             ).show()
         }
     }
+
     private fun registerUser(nome: String, email: String, senha: String, codigoGinasio: Int) {
         val uniqueID = UUID.randomUUID().toString()
-        val newUser = User(id = uniqueID, email = email, nome = nome, password = senha, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio)
+        val hashedPassword = hashPassword(senha) // Hash da senha
+        val newUser = User(id = uniqueID, email = email, nome = nome, password = hashedPassword, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio, imc = "", dieta = "")
         val newUserRequest = UserRequest(newUser)
         val call = ApiService().service().createUser(newUserRequest)
         call.enqueue(object : Callback<UserRequest> {
@@ -120,10 +124,10 @@ class RegistoActivity : AppCompatActivity() {
                     Toast.makeText(this@RegistoActivity, "Erro ao realizar registo. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<UserRequest>, t: Throwable) {
                 Toast.makeText(this@RegistoActivity, "Erro de conexão. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_SHORT).show()
             }
         })
     }
-
 }

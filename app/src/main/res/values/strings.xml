@@ -7,6 +7,8 @@
     <string name="register">Registar</string>
     <string name="qr_code">QRCode</string>
     <string name="back">Voltar</string>
-
-
+    <string name="abaixo_peso_message">Você está abaixo do peso. Consulte um profissional para orientações.</string>
+    <string name="peso_normal_message">Você está dentro do peso normal. Continue mantendo um estilo de vida saudável.</string>
+    <string name="sobrepeso_message">Você está com sobrepeso. Considere ajustes na dieta e atividade física.</string>
+    <string name="obeso_message">Você está obeso. Consulte um profissional para um plano personalizado.</string>
 </resources>
