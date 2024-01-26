@@ -46,36 +46,63 @@ class RegistoActivity : AppCompatActivity() {
         val confirmarSenha = editTextConfirmarSenha.text.toString().trim()
         val codigoGinasio = editTextCodigoGinasio.text.toString().trim()
 
-        if (senha == confirmarSenha) {
-            val call = ApiService().service().getUsers()
-            call.enqueue(object : Callback<UserResponse> {
-                override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                    if (response.isSuccessful) {
-                        val users = response.body()?.users
-                        if (users != null) {
-                            val emailExists = users.any { it.email == email }
-                            if (emailExists) {
-                                Toast.makeText(this@RegistoActivity, "O e-mail já está em uso. Por favor, tente novamente.", Toast.LENGTH_SHORT).show()
-                            } else if (users.any { it.codGym == codigoGinasio.toInt() }) {
-                                registerUser(nome, email, senha, codigoGinasio.toInt())
-                            } else {
-                                Toast.makeText(this@RegistoActivity, "Código do ginásio inválido.", Toast.LENGTH_SHORT).show()
+        if (nome.isNotEmpty() && email.isNotEmpty() && senha.isNotEmpty() && confirmarSenha.isNotEmpty() && codigoGinasio.isNotEmpty()) {
+            if (senha == confirmarSenha) {
+                val call = ApiService().service().getUsers()
+                call.enqueue(object : Callback<UserResponse> {
+                    override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
+                        if (response.isSuccessful) {
+                            val users = response.body()?.users
+                            if (users != null) {
+                                val emailExists = users.any { it.email == email }
+                                if (emailExists) {
+                                    Toast.makeText(
+                                        this@RegistoActivity,
+                                        "O e-mail já está em uso. Por favor, tente novamente.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                } else if (users.any { it.codGym == codigoGinasio.toInt() }) {
+                                    registerUser(nome, email, senha, codigoGinasio.toInt())
+                                } else {
+                                    Toast.makeText(
+                                        this@RegistoActivity,
+                                        "Código do ginásio inválido.",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
+                        } else {
+                            Toast.makeText(
+                                this@RegistoActivity,
+                                "Erro ao verificar o código do ginásio. Tente novamente mais tarde.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
-                    } else {
-                        Toast.makeText(this@RegistoActivity, "Erro ao verificar o código do ginásio. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
                     }
-                }
 
-                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
-                    Toast.makeText(this@RegistoActivity, "Erro de conexão. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_SHORT).show()
-                }
-            })
+                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                        Toast.makeText(
+                            this@RegistoActivity,
+                            "Erro de conexão. Verifique sua conexão com a internet e tente novamente.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+            } else {
+                Toast.makeText(
+                    this,
+                    "As senhas não correspondem. Por favor, tente novamente.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         } else {
-            Toast.makeText(this, "As senhas não correspondem. Por favor, tente novamente.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                this,
+                "Por favor, preencha todos os campos antes de registar.",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
-
     private fun registerUser(nome: String, email: String, senha: String, codigoGinasio: Int) {
         val uniqueID = UUID.randomUUID().toString()
         val newUser = User(id = uniqueID, email = email, nome = nome, password = senha, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio)

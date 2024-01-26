@@ -8,7 +8,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
-import com.google.zxing.WriterException
 import com.journeyapps.barcodescanner.BarcodeEncoder
 import java.util.*
 
