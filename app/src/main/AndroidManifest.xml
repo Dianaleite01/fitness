@@ -50,6 +50,11 @@
             android:theme="@style/Theme.Fitness">
         </activity>
         <activity
+            android:name=".CalendarioActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fitness">
+        </activity>
+        <activity
             android:name=".SplashScreenActivity"
             android:exported="true"
             android:theme="@style/Theme.Fitness">
