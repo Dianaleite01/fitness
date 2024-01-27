@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class ApiService {
     private val gson: Gson = GsonBuilder().setLenient().create()
-    private val host = "https://api.sheety.co/907d82c7c1e2fffda1a10ef3aae90792/api/"
+    private val host = "https://api.sheety.co/2509510ee785287f76db1797fe2632c8/api/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(host)
