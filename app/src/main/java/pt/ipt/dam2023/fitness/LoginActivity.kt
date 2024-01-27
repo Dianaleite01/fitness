@@ -84,14 +84,18 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun getUsersApi(email: String, hashedPassword: String) {
-        val call = ApiService().service().getUsers()
+    private fun getUsersApi(username: String, hashedPassword: String) {
+        val token = "GonDi"
+        val authHeader = "Bearer $token"
+
+        val call = ApiService().service().getUsers(authHeader)
+
         call.enqueue(object : Callback<UserResponse> {
             override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                 if (response.isSuccessful) {
                     val users = response.body()?.users
                     if (users != null) {
-                        val matchedUser = users.find { it.email == email && it.password == hashedPassword }
+                        val matchedUser = users.find { it.email == username && it.password == hashedPassword }
                         if (matchedUser != null) {
                             showSuccessMessage()
                         } else {

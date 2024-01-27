@@ -50,7 +50,9 @@ class RegistoActivity : AppCompatActivity() {
 
         if (nome.isNotEmpty() && email.isNotEmpty() && senha.isNotEmpty() && confirmarSenha.isNotEmpty() && codigoGinasio.isNotEmpty()) {
             if (senha == confirmarSenha) {
-                val call = ApiService().service().getUsers()
+                val token = "GonDi"
+                val authHeader = "Bearer $token"
+                val call = ApiService().service().getUsers(authHeader)
                 call.enqueue(object : Callback<UserResponse> {
                     override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
                         if (response.isSuccessful) {
@@ -111,7 +113,9 @@ class RegistoActivity : AppCompatActivity() {
         val hashedPassword = hashPassword(senha) // Hash da senha
         val newUser = User(id = uniqueID, email = email, nome = nome, password = hashedPassword, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio, imc = "", dieta = "", admin = false)
         val newUserRequest = UserRequest(newUser)
-        val call = ApiService().service().createUser(newUserRequest)
+        val token = "GonDi"
+        val authHeader = "Bearer $token"
+        val call = ApiService().service().createUser(newUserRequest, authHeader)
         call.enqueue(object : Callback<UserRequest> {
             override fun onResponse(call: Call<UserRequest>, response: Response<UserRequest>) {
                 if (response.isSuccessful) {
