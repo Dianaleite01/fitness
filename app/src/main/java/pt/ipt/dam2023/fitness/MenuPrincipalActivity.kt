@@ -2,6 +2,7 @@ package pt.ipt.dam2023.fitness
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 
@@ -56,8 +57,31 @@ class MenuPrincipalActivity : AppCompatActivity() {
         }
 
         logoutCard.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
+
+    }
+    override fun onBackPressed() {
+        @Suppress("DEPRECATION")
+        super.onBackPressed()
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmação")
+        builder.setMessage("Tem a certeza que quer sair da aplicação?")
+
+        builder.setPositiveButton("Sim") { dialog, which ->
+            // Ação de logout
             val intent = Intent(this@MenuPrincipalActivity, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        builder.setNegativeButton("Não") { dialog, which ->
+            // Não faz nada, usuário optou por não sair
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 }

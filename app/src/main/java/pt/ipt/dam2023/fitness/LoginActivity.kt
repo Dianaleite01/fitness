@@ -2,10 +2,11 @@ package pt.ipt.dam2023.fitness
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import retrofit2.Call
 import retrofit2.Callback
@@ -17,6 +18,12 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: Button
+
+    private val exitConfirmationCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            showExitConfirmationDialog()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +42,33 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, RegistoActivity::class.java)
             startActivity(intent)
         }
+
+        // Adiciona o callback personalizado
+        onBackPressedDispatcher.addCallback(this, exitConfirmationCallback)
+    }
+
+    private fun showExitConfirmationDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Confirmação")
+        builder.setMessage("Tem a certeza que quer sair da aplicação?")
+
+        builder.setPositiveButton("Sim") { dialog, which ->
+            // Ação de logout ou fechar a aplicação
+            finishAffinity()
+        }
+
+        builder.setNegativeButton("Não") { dialog, which ->
+            // Não faz nada, usuário optou por não sair
+        }
+
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Remove o callback personalizado para evitar vazamentos de memória
+        exitConfirmationCallback.remove()
     }
 
     private fun performLogin() {
@@ -59,7 +93,6 @@ class LoginActivity : AppCompatActivity() {
                     if (users != null) {
                         val matchedUser = users.find { it.email == email && it.password == hashedPassword }
                         if (matchedUser != null) {
-                            Log.i("INFO", "User encontrado: $matchedUser")
                             showSuccessMessage()
                         } else {
                             showErrorMessage("Credenciais inválidas.")
