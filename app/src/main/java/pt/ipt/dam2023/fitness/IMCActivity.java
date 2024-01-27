@@ -2,7 +2,6 @@ package pt.ipt.dam2023.fitness;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -14,10 +13,8 @@ public class IMCActivity extends AppCompatActivity {
 
     private EditText editTextWeight;
     private EditText editTextHeight;
-    private Button buttonCalculate;
     private ImageView imageViewDieta;
     private ImageView imageViewExercicio;
-    private Button buttonBackToMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,26 +23,18 @@ public class IMCActivity extends AppCompatActivity {
 
         editTextWeight = findViewById(R.id.editTextWeight);
         editTextHeight = findViewById(R.id.editTextHeight);
-        buttonCalculate = findViewById(R.id.buttonCalculate);
+        Button buttonCalculate = findViewById(R.id.buttonCalculate);
         imageViewDieta = findViewById(R.id.imageViewDieta);
         imageViewExercicio = findViewById(R.id.imageViewExercicio);
-        buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
+        Button buttonBackToMenu = findViewById(R.id.buttonBackToMenu);
 
-        buttonCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                calculateIMC();
-            }
-        });
+        buttonCalculate.setOnClickListener(view -> calculateIMC());
 
-        buttonBackToMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Adicionar a lógica para ir para o Menu Principal
-                Intent intent = new Intent(IMCActivity.this, MenuPrincipalActivity.class);
-                startActivity(intent);
-                finish(); // Opcional, dependendo do comportamento desejado
-            }
+        buttonBackToMenu.setOnClickListener(v -> {
+            // Adicionar a lógica para ir para o Menu Principal
+            Intent intent = new Intent(IMCActivity.this, MenuPrincipalActivity.class);
+            startActivity(intent);
+            finish(); // Opcional, dependendo do comportamento desejado
         });
     }
 
