@@ -34,6 +34,11 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin = findViewById(R.id.buttonLogin)
         buttonRegister = findViewById(R.id.buttonRegister)
 
+        // Preencher automaticamente o campo de e-mail se existir um e-mail salvo
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val savedEmail = sharedPreferences.getString("userEmail", "")
+        editTextEmail.setText(savedEmail)
+
         buttonLogin.setOnClickListener {
             performLogin()
         }
@@ -117,6 +122,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showSuccessMessage() {
         Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
+        // Salvar o e-mail do usuário nas SharedPreferences
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userEmail", editTextEmail.text.toString())
+        editor.apply()
         val intent = Intent(this, MenuPrincipalActivity::class.java)
         startActivity(intent)
         finish()
