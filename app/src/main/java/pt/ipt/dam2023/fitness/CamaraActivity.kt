@@ -111,7 +111,7 @@ class CamaraActivity : AppCompatActivity() {
             uploadFoto(imageBitmap!!, sharedPreferences.getString("userId", "") ?: "")
         }
         builder.setNegativeButton("Descartar") { _, _ ->
-            // Limpar a variável imageBitmap se o usuário decidir descartar
+            // Limpar a variável imageBitmap se o user decidir descartar
             imageBitmap = null
         }
         builder.create().show()
@@ -150,7 +150,7 @@ class CamaraActivity : AppCompatActivity() {
                         Toast.makeText(this@CamaraActivity, "Foto de perfil atualizada com sucesso!", Toast.LENGTH_SHORT).show()
                     } else {
                         // Lidar com o caso em que o ID do user é nulo
-                        Toast.makeText(this@CamaraActivity, "ID do usuário nulo na resposta.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@CamaraActivity, "ID do user nulo na resposta.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     // Lidar com a resposta não bem-sucedida

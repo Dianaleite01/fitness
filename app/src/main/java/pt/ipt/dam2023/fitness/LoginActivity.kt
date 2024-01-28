@@ -18,7 +18,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: Button
-    private lateinit var buttonSobre: Button
 
     private val exitConfirmationCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {

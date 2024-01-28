@@ -19,12 +19,13 @@ class MenuPrincipalActivity : AppCompatActivity() {
     private lateinit var qrcodeCard: CardView
     private lateinit var galeriaCard: CardView
     private lateinit var imcCard: CardView
-    private lateinit var corridaCard: CardView
+    private lateinit var sobreCard: CardView
     private lateinit var calendarioCard: CardView
     private lateinit var logoutCard: CardView
     private lateinit var txtNome: TextView
     private lateinit var fotoPerfil: ImageView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menuprincipal)
@@ -36,7 +37,7 @@ class MenuPrincipalActivity : AppCompatActivity() {
         qrcodeCard = findViewById(R.id.qrcodeCard)
         galeriaCard = findViewById(R.id.galeriaCard)
         imcCard = findViewById(R.id.imcCard)
-        corridaCard = findViewById(R.id.corridaCard)
+        sobreCard = findViewById(R.id.sobreCard)
         calendarioCard = findViewById(R.id.calendarioCard)
         logoutCard = findViewById(R.id.logoutCard)
 
@@ -76,8 +77,8 @@ class MenuPrincipalActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        corridaCard.setOnClickListener {
-            val intent = Intent(this@MenuPrincipalActivity, CorridaActivity::class.java)
+        sobreCard.setOnClickListener {
+            val intent = Intent(this@MenuPrincipalActivity, SobreActivity::class.java)
             startActivity(intent)
         }
 
