@@ -1,22 +1,22 @@
 package pt.ipt.dam2023.fitness
 
+import android.Manifest
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Base64
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import android.Manifest
-import android.content.SharedPreferences
-import android.graphics.BitmapFactory
-import android.util.Base64
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -28,6 +28,7 @@ class CamaraActivity : AppCompatActivity() {
     private lateinit var imageView: ImageView
     lateinit var button: Button
     private lateinit var adicionarbutton: Button
+    private lateinit var buttonBackToMenu: Button
     private var imageBitmap: Bitmap? = null
     private val requestimagecapture = 100
     private val mycamerapermissioncode = 101
@@ -42,6 +43,7 @@ class CamaraActivity : AppCompatActivity() {
         imageView = findViewById(R.id.camara)
         button = findViewById(R.id.tirarfotoButton)
         adicionarbutton = findViewById(R.id.adicionarFotoButton)
+        buttonBackToMenu = findViewById(R.id.btnVoltarMenuPrincipal)
 
         sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
 
@@ -54,6 +56,13 @@ class CamaraActivity : AppCompatActivity() {
                 Toast.makeText(this, "Error:" + e.localizedMessage, Toast.LENGTH_SHORT).show()
             }
         }
+
+        buttonBackToMenu.setOnClickListener(View.OnClickListener { v: View? ->
+            val intent = Intent(
+                this@CamaraActivity, MenuPrincipalActivity::class.java)
+            startActivity(intent)
+            finish()
+        })
 
         adicionarbutton.setOnClickListener{
             if (imageBitmap != null) {

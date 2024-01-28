@@ -31,10 +31,9 @@ public class IMCActivity extends AppCompatActivity {
         buttonCalculate.setOnClickListener(view -> calculateIMC());
 
         buttonBackToMenu.setOnClickListener(v -> {
-            // Adicionar a lógica para ir para o Menu Principal
             Intent intent = new Intent(IMCActivity.this, MenuPrincipalActivity.class);
             startActivity(intent);
-            finish(); // Opcional, dependendo do comportamento desejado
+            finish();
         });
     }
 
