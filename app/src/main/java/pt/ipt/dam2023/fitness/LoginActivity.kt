@@ -100,26 +100,34 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val users = response.body()?.users
                     if (users != null) {
+                        // Encontrar o usuário correspondente nas listas de usuários
                         val matchedUser = users.find { it.email == username && it.password == hashedPassword }
+
+                        // Verificar se o usuário foi encontrado
                         if (matchedUser != null) {
+                            // Se encontrado, salvar o ID do usuário na SharedPreferences
+                            saveUserIdToSharedPreferences(matchedUser.id)
                             showSuccessMessage()
                         } else {
+                            // Se não encontrado, exibir mensagem de erro
                             showErrorMessage("Credenciais inválidas.")
                         }
                     } else {
+                        // Lista de usuários nula, exibir mensagem de erro
                         showErrorMessage("Lista de usuários nula.")
                     }
                 } else {
+                    // Resposta não bem-sucedida, exibir mensagem de erro
                     showErrorMessage("Erro na chamada à API: ${response.message()}")
                 }
             }
 
             override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                // Falha na chamada à API, exibir mensagem de erro
                 showErrorMessage("Erro na chamada à API: ${t.message}")
             }
         })
     }
-
     private fun showSuccessMessage() {
         Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
         // Salvar o e-mail do usuário nas SharedPreferences
@@ -141,4 +149,12 @@ class LoginActivity : AppCompatActivity() {
         val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
     }
+
+    private fun saveUserIdToSharedPreferences(userId: String) {
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userId", userId)
+        editor.apply()
+    }
+
 }

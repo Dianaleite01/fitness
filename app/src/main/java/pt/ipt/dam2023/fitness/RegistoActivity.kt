@@ -102,7 +102,7 @@ class RegistoActivity : AppCompatActivity() {
         } else {
             Toast.makeText(
                 this,
-                "Por favor, preencha todos os campos antes de registar.",
+                "Por favor, preencha todos os campos antes de se registar.",
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -120,13 +120,12 @@ class RegistoActivity : AppCompatActivity() {
             override fun onResponse(call: Call<UserRequest>, response: Response<UserRequest>) {
                 if (response.isSuccessful) {
                     Toast.makeText(this@RegistoActivity, "Registo bem-sucedido!", Toast.LENGTH_SHORT).show()
-
                     // Salvar o e-mail do usuário nas SharedPreferences após o registro
                     val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putString("userEmail", email)
+                    editor.putString("userId",uniqueID)
                     editor.apply()
-
                     // Navegar para a atividade de login
                     val intent = Intent(this@RegistoActivity, LoginActivity::class.java)
                     startActivity(intent)

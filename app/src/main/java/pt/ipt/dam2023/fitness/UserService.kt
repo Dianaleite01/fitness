@@ -19,9 +19,6 @@ interface UserService {
     @POST("calendario")
     fun id(@Body newCalendario: Calendario): Call<Calendario>
 
-    @PUT("user/{iduser}")
-    fun updateUser(@Path("iduser") userId: String, @Body userRequest: UserRequest): Call<UserRequest>
-
 }
 
 
