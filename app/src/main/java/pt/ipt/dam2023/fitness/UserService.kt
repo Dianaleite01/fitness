@@ -6,8 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Body
 import retrofit2.http.Header
-import retrofit2.http.PUT
-import retrofit2.http.Path
+
 
 interface UserService {
     @GET("user")
@@ -16,11 +15,6 @@ interface UserService {
     @POST("user")
     fun createUser(@Body newUser: UserRequest, @Header("Authorization") authHeader: String): Call<UserRequest>
 
-    @POST("calendario")
-    fun id(@Body newCalendario: Calendario): Call<Calendario>
-
-    @PUT("user/{iduser}")
-    fun updateUser(@Path("iduser") userId: String, @Body userRequest: UserRequest): Call<UserRequest>
 
 }
 
