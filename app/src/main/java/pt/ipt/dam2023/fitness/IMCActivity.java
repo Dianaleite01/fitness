@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,10 +32,9 @@ public class IMCActivity extends AppCompatActivity {
         buttonCalculate.setOnClickListener(view -> calculateIMC());
 
         buttonBackToMenu.setOnClickListener(v -> {
-            // Adicionar a lógica para ir para o Menu Principal
             Intent intent = new Intent(IMCActivity.this, MenuPrincipalActivity.class);
             startActivity(intent);
-            finish(); // Opcional, dependendo do comportamento desejado
+            finish();
         });
     }
 
@@ -47,23 +47,23 @@ public class IMCActivity extends AppCompatActivity {
 
             displayIMCResult(imc);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Por favor, insira valores válidos para peso e altura.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Por favor, insira valores válidos para o peso e a altura.", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void displayIMCResult(double imc) {
         if (imc < 18.5) {
             displayResult("Abaixo do Peso");
-            displayImages(R.drawable.dietapesobaixo, R.drawable.exerciciosobrepeso);
+            displayImages(R.drawable.dietapesobaixo, R.drawable.exerciciosobrepeso, "Estás abaixo do peso ideal. Recomenda-se incluir alimentos ricos em proteínas e calorias para aumentar a ingestão calórica. Consulte um nutricionista para desenvolver um plano personalizado, considerando as suas necessidades alimentares específicas. Adicionalmente, um treino leve com ênfase em ganho de massa muscular pode ser benéfico para fortalecer o corpo.", "Sugere-se um treino leve, com foco em ganho de massa muscular. Isso pode incluir exercícios de resistência e treinamento com pesos para fortalecer os músculos e melhorar a composição corporal.");
         } else if (imc >= 18.5 && imc < 25) {
             displayResult("Peso Normal");
-            displayImages(R.drawable.dietapesonormal, R.drawable.exerciciopesonormal);
+            displayImages(R.drawable.dietapesonormal, R.drawable.exerciciopesonormal, "Parabéns! Estás está dentro da faixa de peso que é considerado normal. Manter uma dieta equilibrada é fundamental para sustentar a sua saúde. Certifique-se de incluir alimentos de todos os grupos alimentares, como frutas, vegetais, proteínas magras e grãos integrais.", "Para manter a sua saúde geral, é recomendado incorporar um treino regular. Isso pode incluir atividades como caminhadas, corridas, natação ou qualquer forma de exercício que aprecie.");
         } else if (imc >= 25 && imc < 30) {
             displayResult("Sobrepeso");
-            displayImages(R.drawable.dietasobrepeso, R.drawable.exerciciosobrepeso);
+            displayImages(R.drawable.dietasobrepeso, R.drawable.exerciciosobrepeso, "Estás com sobrepeso, o que pode aumentar o risco de problemas de saúde. Recomenda-se reduzir a ingestão de calorias e focar em alimentos nutritivos. Incluir mais frutas, vegetais e grãos integrais na sua dieta pode ser benéfico para a perda de peso.", "Incorporar treinos cardiovasculares, como corrida, ciclismo ou aeróbica, pode ser eficaz para queimar calorias. Além disso, incluir treinos de resistência pode ajudar a fortalecer os músculos e melhorar a composição corporal.");
         } else {
             displayResult("Obeso");
-            displayImages(R.drawable.dietaobeso, R.drawable.exercicioobeso);
+            displayImages(R.drawable.dietaobeso, R.drawable.exercicioobeso, "Está classificado como obeso, o que pode aumentar significativamente o risco de várias condições de saúde. Recomenda-se seguir um plano de dieta com restrição calórica, focado em alimentos saudáveis e nutritivos. Consultar um profissional de saúde ou nutricionista pode ser útil para desenvolver um plano alimentar personalizado.", "Um treino intensivo é recomendado para a queima de calorias e melhoria da aptidão cardiovascular. Isso pode incluir atividades como corrida, treino intervalado de alta intensidade (HIIT) e exercícios aeróbicos.");
         }
     }
 
@@ -88,10 +88,17 @@ public class IMCActivity extends AppCompatActivity {
         Toast.makeText(this, "Resultado do IMC: " + result + "\n" + message, Toast.LENGTH_LONG).show();
     }
 
-    private void displayImages(int dietaImageResId, int exercicioImageResId) {
+    private void displayImages(int dietaImageResId, int exercicioImageResId, String dietaDescricao, String exercicioDescricao) {
         imageViewDieta.setImageResource(dietaImageResId);
         imageViewExercicio.setImageResource(exercicioImageResId);
+
+        TextView textViewDietaDescricao = findViewById(R.id.textViewDietaDescricao);
+        TextView textViewExercicioDescricao = findViewById(R.id.textViewExercicioDescricao);
+
+        textViewDietaDescricao.setText(dietaDescricao);
+        textViewExercicioDescricao.setText(exercicioDescricao);
     }
+
 
 
 }
