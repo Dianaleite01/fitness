@@ -17,6 +17,12 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+<<<<<<< Updated upstream
+=======
+import android.Manifest
+import android.content.SharedPreferences
+import android.util.Base64
+>>>>>>> Stashed changes
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,6 +45,12 @@ class CamaraActivity : AppCompatActivity() {
         setContentView(R.layout.activity_camara)
 
         requestCameraPermission()
+
+        val btnVoltarMenuPrincipal: Button = findViewById(R.id.btnVoltarMenuPrincipal)
+        btnVoltarMenuPrincipal.setOnClickListener {
+            val intent = Intent(this@CamaraActivity, MenuPrincipalActivity::class.java)
+            startActivity(intent)
+        }
 
         imageView = findViewById(R.id.camara)
         button = findViewById(R.id.tirarfotoButton)
@@ -87,6 +99,7 @@ class CamaraActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == requestimagecapture && resultCode == RESULT_OK){
             imageBitmap = data?.extras?.get("data") as Bitmap
@@ -101,18 +114,13 @@ class CamaraActivity : AppCompatActivity() {
         builder.setTitle("Adicionar Foto")
         builder.setMessage("Deseja adicionar esta foto ao perfil?")
         builder.setPositiveButton("Adicionar") { _, _ ->
-            uploadFoto(imageBitmap!!, getUserIdFromSharedPreferences())
+            uploadFoto(imageBitmap!!, sharedPreferences.getString("userId", "") ?: "")
         }
         builder.setNegativeButton("Descartar") { _, _ ->
             // Limpar a variável imageBitmap se o usuário decidir descartar
             imageBitmap = null
         }
         builder.create().show()
-    }
-
-    private fun getUserIdFromSharedPreferences(): String {
-        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-        return sharedPreferences.getString("userId", "") ?: ""
     }
 
     private fun saveBase64ImageToSharedPreferences(base64Image: String) {
@@ -134,7 +142,7 @@ class CamaraActivity : AppCompatActivity() {
             return
         }
         saveBase64ImageToSharedPreferences(base64Image)
-        val user = User(id = userId, email = "", nome = "", password = "", ftperfil = base64Image, peso = "", altura = "", codGym = 0, imc = "", dieta = "", admin = false)
+        val user = User(iduser = userId, email = "", nome = "", password = "", ftperfil = base64Image, peso = "", altura = "", codGym = 0, imc = "", dieta = "", admin = false)
         val newUserRequest = UserRequest(user)
         val token = "GonDi"
         val authHeader = "Bearer $token"
@@ -142,13 +150,22 @@ class CamaraActivity : AppCompatActivity() {
         call.enqueue(object : Callback<UserRequest> {
             override fun onResponse(call: Call<UserRequest>, response: Response<UserRequest>) {
                 if (response.isSuccessful) {
-                    saveUserIdToSharedPreferences(response.body()?.user?.id)
-                    Toast.makeText(this@CamaraActivity, "Foto de perfil atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                    val userIdFromResponse = response.body()?.user?.iduser
+                    if (userIdFromResponse != null) {
+                        saveUserIdToSharedPreferences(userIdFromResponse)
+                        Toast.makeText(this@CamaraActivity, "Foto de perfil atualizada com sucesso!", Toast.LENGTH_SHORT).show()
+                    } else {
+                        // Lidar com o caso em que o ID do usuário é nulo
+                        Toast.makeText(this@CamaraActivity, "ID do usuário nulo na resposta.", Toast.LENGTH_SHORT).show()
+                    }
                 } else {
+                    // Lidar com a resposta não bem-sucedida
                     Toast.makeText(this@CamaraActivity, "Erro ao atualizar a foto do perfil. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<UserRequest>, t: Throwable) {
+                // Lidar com a falha na comunicação com o servidor
                 Toast.makeText(this@CamaraActivity, "Erro de conexão. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_SHORT).show()
             }
         })
