@@ -105,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
                         // Verificar se o user foi encontrado
                         if (matchedUser != null) {
                             // Se encontrado, salvar o ID do user na SharedPreferences
-                            saveUserIdToSharedPreferences(matchedUser.id)
+                            saveUserIdToSharedPreferences(matchedUser.iduser)
                             showSuccessMessage()
                         } else {
                             // Se não encontrado, exibir mensagem de erro

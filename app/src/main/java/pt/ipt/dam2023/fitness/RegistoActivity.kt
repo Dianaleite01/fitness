@@ -111,7 +111,7 @@ class RegistoActivity : AppCompatActivity() {
     private fun registerUser(nome: String, email: String, senha: String, codigoGinasio: Int) {
         val uniqueID = UUID.randomUUID().toString()
         val hashedPassword = hashPassword(senha) // Hash da senha
-        val newUser = User(id = uniqueID, email = email, nome = nome, password = hashedPassword, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio, imc = "", dieta = "", admin = false)
+        val newUser = User(iduser = uniqueID, email = email, nome = nome, password = hashedPassword, ftperfil = "", peso = "", altura = "", codGym = codigoGinasio, imc = "", dieta = "", admin = false)
         val newUserRequest = UserRequest(newUser)
         val token = "GonDi"
         val authHeader = "Bearer $token"

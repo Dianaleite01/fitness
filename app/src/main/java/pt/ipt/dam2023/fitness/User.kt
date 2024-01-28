@@ -4,7 +4,7 @@ package pt.ipt.dam2023.fitness
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    @SerializedName("iduser") val id: String,
+    @SerializedName("iduser") val iduser: String,
     @SerializedName("email") val email: String,
     @SerializedName("nome") val nome: String,
     @SerializedName("password") val password: String,
