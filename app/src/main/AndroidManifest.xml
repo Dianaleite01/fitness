@@ -30,6 +30,11 @@
             android:theme="@style/Theme.Fitness">
         </activity>
         <activity
+            android:name=".SobreActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Fitness">
+        </activity>
+        <activity
             android:name=".RegistoActivity"
             android:exported="false"
             android:theme="@style/Theme.Fitness">

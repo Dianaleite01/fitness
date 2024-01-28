@@ -47,7 +47,7 @@ class MenuPrincipalActivity : AppCompatActivity() {
         }
 
         corridaCard.setOnClickListener {
-            val intent = Intent(this@MenuPrincipalActivity, CorridaActivity::class.java)
+            val intent = Intent(this@MenuPrincipalActivity, SobreActivity::class.java)
             startActivity(intent)
         }
 

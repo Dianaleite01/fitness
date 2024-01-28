@@ -34,7 +34,6 @@ class LoginActivity : AppCompatActivity() {
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
         buttonRegister = findViewById(R.id.buttonRegister)
-        buttonSobre = findViewById(R.id.buttonSobre)
 
         // Preencher automaticamente o campo de e-mail se existir um e-mail salvo
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -50,11 +49,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        buttonSobre.setOnClickListener {
-            val intent = Intent(this, SobreActivity::class.java)
-            startActivity(intent)
-        }
-
         // Adiciona o callback personalizado
         onBackPressedDispatcher.addCallback(this, exitConfirmationCallback)
     }
@@ -65,22 +59,15 @@ class LoginActivity : AppCompatActivity() {
         builder.setMessage("Tem a certeza que quer sair da aplicação?")
 
         builder.setPositiveButton("Sim") { dialog, which ->
-            // Ação de logout ou fechar a aplicação
+            // logout
             finishAffinity()
         }
 
         builder.setNegativeButton("Não") { dialog, which ->
-            // Não faz nada, usuário optou por não sair
         }
 
         val dialog = builder.create()
         dialog.show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        // Remove o callback personalizado para evitar vazamentos de memória
-        exitConfirmationCallback.remove()
     }
 
     private fun performLogin() {
@@ -88,11 +75,11 @@ class LoginActivity : AppCompatActivity() {
         val password = editTextPassword.text.toString().trim()
 
         if (email.isNotEmpty() && password.isNotEmpty()) {
-            // Hash da senha antes de fazer a chamada à API
+            // Hash
             val hashedPassword = hashPassword(password)
             getUsersApi(email, hashedPassword)
         } else {
-            Toast.makeText(this, "Preencha todos os campos", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Preencher todos os campos", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -114,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                             showErrorMessage("Credenciais inválidas.")
                         }
                     } else {
-                        showErrorMessage("Lista de usuários nula.")
+                        showErrorMessage("Lista de users nula.")
                     }
                 } else {
                     showErrorMessage("Erro na chamada à API: ${response.message()}")
@@ -129,7 +116,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showSuccessMessage() {
         Toast.makeText(this, "Login bem-sucedido!", Toast.LENGTH_SHORT).show()
-        // Salvar o e-mail do usuário nas SharedPreferences
+        // Guardar o e-mail do user nas SharedPreferences
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val editor = sharedPreferences.edit()
         editor.putString("userEmail", editTextEmail.text.toString())
