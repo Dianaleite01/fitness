@@ -18,6 +18,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
     private lateinit var buttonRegister: Button
+    private lateinit var buttonSobre: Button
 
     private val exitConfirmationCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
@@ -33,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
         buttonRegister = findViewById(R.id.buttonRegister)
+        buttonSobre = findViewById(R.id.buttonSobre)
 
         // Preencher automaticamente o campo de e-mail se existir um e-mail salvo
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
@@ -45,6 +47,11 @@ class LoginActivity : AppCompatActivity() {
 
         buttonRegister.setOnClickListener {
             val intent = Intent(this, RegistoActivity::class.java)
+            startActivity(intent)
+        }
+
+        buttonSobre.setOnClickListener {
+            val intent = Intent(this, SobreActivity::class.java)
             startActivity(intent)
         }
 

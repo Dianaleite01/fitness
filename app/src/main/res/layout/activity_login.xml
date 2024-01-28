@@ -71,8 +71,18 @@
             android:layout_marginEnd="16dp"
             android:text="@string/register" />
 
+        <Button
+            android:id="@+id/buttonSobre"
+            android:layout_width="135dp"
+            android:layout_height="41dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="280dp"
+            android:layout_marginTop="324dp"
+            android:layout_marginEnd="12dp"
+            android:text="@string/info" />
+
     </RelativeLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sobre Nós"
+            android:textSize="24sp"
+            android:gravity="center"
+            android:padding="16dp"
+            tools:ignore="MissingConstraints" />
+
+        <LinearLayout
+            android:layout_width="414dp"
+            android:layout_height="482dp"
+            android:orientation="vertical"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="-2dp"
+            tools:layout_editor_absoluteY="66dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="262dp"
+                android:layout_marginBottom="16dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="177dp"
+                    android:layout_height="205dp"
+                    android:scaleType="centerCrop"
+                    android:src="" />
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="wrap_content"
+                    android:text="Diana Leite"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="168dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nº23392"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="243dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="178dp"
+                    android:layout_height="177dp"
+                    android:scaleType="centerCrop"
+                    android:src="" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Gonçalo Barbosa"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:layout_width="246dp"
+                    android:layout_height="wrap_content"
+                    android:text="Nº23395"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bibliotecas adicionadas -Retrofit-> facilitar a comunicação com a nossa API-Gson-> utilizamos para o nosso API service-Lottie -> foi  necessário para fazer o nosso splashscreen-Zxing/journey apps -> leitura de códigos de barra e leitores"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
