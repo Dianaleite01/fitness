@@ -49,63 +49,92 @@ class RegistoActivity : AppCompatActivity() {
         val codigoGinasio = editTextCodigoGinasio.text.toString().trim()
 
         if (nome.isNotEmpty() && email.isNotEmpty() && senha.isNotEmpty() && confirmarSenha.isNotEmpty() && codigoGinasio.isNotEmpty()) {
-            if (senha == confirmarSenha) {
-                val token = "GonDi"
-                val authHeader = "Bearer $token"
-                val call = ApiService().service().getUsers(authHeader)
-                call.enqueue(object : Callback<UserResponse> {
-                    override fun onResponse(call: Call<UserResponse>, response: Response<UserResponse>) {
-                        if (response.isSuccessful) {
-                            val users = response.body()?.users
-                            if (users != null) {
-                                val emailExists = users.any { it.email == email }
-                                if (emailExists) {
+            if (nome.isNotEmpty() && email.isNotEmpty() && senha.isNotEmpty() && confirmarSenha.isNotEmpty() && codigoGinasio.isNotEmpty()) {
+                if (senha.length >= 6) { // Verificar se a senha tem pelo menos 6 caracteres
+                    if (android.util.Patterns.EMAIL_ADDRESS.matcher(email)
+                            .matches()
+                    ) { // Verificar o formato do e-mail
+                        if (senha == confirmarSenha) {
+                            val token = "GonDi"
+                            val authHeader = "Bearer $token"
+                            val call = ApiService().service().getUsers(authHeader)
+                            call.enqueue(object : Callback<UserResponse> {
+                                override fun onResponse(
+                                    call: Call<UserResponse>,
+                                    response: Response<UserResponse>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        val users = response.body()?.users
+                                        if (users != null) {
+                                            val emailExists = users.any { it.email == email }
+                                            if (emailExists) {
+                                                Toast.makeText(
+                                                    this@RegistoActivity,
+                                                    "O e-mail já está em uso. Por favor, tente novamente.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            } else if (users.any { it.codGym == codigoGinasio.toInt() }) {
+                                                registerUser(
+                                                    nome,
+                                                    email,
+                                                    senha,
+                                                    codigoGinasio.toInt()
+                                                )
+                                            } else {
+                                                Toast.makeText(
+                                                    this@RegistoActivity,
+                                                    "Código do ginásio inválido.",
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
+                                        }
+                                    } else {
+                                        Toast.makeText(
+                                            this@RegistoActivity,
+                                            "Erro ao verificar o código do ginásio. Tente novamente mais tarde.",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<UserResponse>, t: Throwable) {
                                     Toast.makeText(
                                         this@RegistoActivity,
-                                        "O e-mail já está em uso. Por favor, tente novamente.",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else if (users.any { it.codGym == codigoGinasio.toInt() }) {
-                                    registerUser(nome, email, senha, codigoGinasio.toInt())
-                                } else {
-                                    Toast.makeText(
-                                        this@RegistoActivity,
-                                        "Código do ginásio inválido.",
+                                        "Erro de conexão. Verifique sua conexão com a internet e tente novamente.",
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            }
+                            })
                         } else {
                             Toast.makeText(
-                                this@RegistoActivity,
-                                "Erro ao verificar o código do ginásio. Tente novamente mais tarde.",
+                                this,
+                                "As senhas não correspondem. Por favor, tente novamente.",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
-                    }
-
-                    override fun onFailure(call: Call<UserResponse>, t: Throwable) {
+                    } else {
                         Toast.makeText(
-                            this@RegistoActivity,
-                            "Erro de conexão. Verifique sua conexão com a internet e tente novamente.",
+                            this,
+                            "Por favor, insira um endereço de e-mail válido.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
-                })
+                } else {
+                    Toast.makeText(
+                        this,
+                        "A senha deve ter pelo menos 6 caracteres.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } else {
                 Toast.makeText(
                     this,
-                    "As senhas não correspondem. Por favor, tente novamente.",
+                    "Por favor, preencha todos os campos antes de registar.",
                     Toast.LENGTH_SHORT
                 ).show()
             }
-        } else {
-            Toast.makeText(
-                this,
-                "Por favor, preencha todos os campos antes de registar.",
-                Toast.LENGTH_SHORT
-            ).show()
         }
+
     }
 
     private fun registerUser(nome: String, email: String, senha: String, codigoGinasio: Int) {
