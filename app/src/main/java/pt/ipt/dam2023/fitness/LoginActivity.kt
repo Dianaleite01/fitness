@@ -63,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         builder.setNegativeButton("Não") { dialog, which ->
-            // Não faz nada, usuário optou por não sair
+            // Não faz nada, user optou por não sair
         }
 
         val dialog = builder.create()
@@ -100,12 +100,11 @@ class LoginActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val users = response.body()?.users
                     if (users != null) {
-                        // Encontrar o usuário correspondente nas listas de usuários
+                        // Encontrar o user correspondente nas listas de user
                         val matchedUser = users.find { it.email == username && it.password == hashedPassword }
-
-                        // Verificar se o usuário foi encontrado
+                        // Verificar se o user foi encontrado
                         if (matchedUser != null) {
-                            // Se encontrado, salvar o ID do usuário na SharedPreferences
+                            // Se encontrado, salvar o ID do user na SharedPreferences
                             saveUserIdToSharedPreferences(matchedUser.id)
                             showSuccessMessage()
                         } else {
@@ -113,7 +112,7 @@ class LoginActivity : AppCompatActivity() {
                             showErrorMessage("Credenciais inválidas.")
                         }
                     } else {
-                        // Lista de usuários nula, exibir mensagem de erro
+                        // Lista de users nula, exibir mensagem de erro
                         showErrorMessage("Lista de usuários nula.")
                     }
                 } else {
