@@ -29,6 +29,7 @@ class CamaraActivity : AppCompatActivity() {
     lateinit var button: Button
     private lateinit var adicionarbutton: Button
     private lateinit var buttonBackToMenu: Button
+    private lateinit var btnVoltarMenuPrincipal: Button
     private var imageBitmap: Bitmap? = null
     private val requestimagecapture = 100
     private val mycamerapermissioncode = 101
@@ -40,7 +41,6 @@ class CamaraActivity : AppCompatActivity() {
 
         requestCameraPermission()
 
-        val btnVoltarMenuPrincipal: Button = findViewById(R.id.btnVoltarMenuPrincipal)
         btnVoltarMenuPrincipal.setOnClickListener {
             val intent = Intent(this@CamaraActivity, MenuPrincipalActivity::class.java)
             startActivity(intent)
@@ -64,8 +64,7 @@ class CamaraActivity : AppCompatActivity() {
         }
 
         buttonBackToMenu.setOnClickListener(View.OnClickListener { v: View? ->
-            val intent = Intent(
-                this@CamaraActivity, MenuPrincipalActivity::class.java)
+            val intent = Intent(this@CamaraActivity, MenuPrincipalActivity::class.java)
             startActivity(intent)
             finish()
         })
@@ -80,20 +79,11 @@ class CamaraActivity : AppCompatActivity() {
     }
 
     private fun requestCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
-                this,
-                Manifest.permission.CAMERA
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.CAMERA),
-                mycamerapermissioncode
-            )
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED
+        ) { ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.CAMERA), mycamerapermissioncode)
         }
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if(requestCode == requestimagecapture && resultCode == RESULT_OK){
             imageBitmap = data?.extras?.get("data") as Bitmap
@@ -108,7 +98,7 @@ class CamaraActivity : AppCompatActivity() {
         builder.setTitle("Adicionar Foto")
         builder.setMessage("Deseja adicionar esta foto ao perfil?")
         builder.setPositiveButton("Adicionar") { _, _ ->
-            uploadFoto(imageBitmap!!, sharedPreferences.getString("userId", "") ?: "")
+            uploadFoto(imageBitmap!!, getUserIdFromSharedPreferences())
         }
         builder.setNegativeButton("Descartar") { _, _ ->
             // Limpar a variável imageBitmap se o user decidir descartar
@@ -117,17 +107,15 @@ class CamaraActivity : AppCompatActivity() {
         builder.create().show()
     }
 
-    private fun saveBase64ImageToSharedPreferences(base64Image: String) {
-        val editor = sharedPreferences.edit()
-        editor.putString("userImage", base64Image)
-        editor.apply()
-    }
+    //conversor
     private fun bitmapToBase64(bitmap: Bitmap): String {
         val byteArrayOutputStream = ByteArrayOutputStream()
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
         val byteArray = byteArrayOutputStream.toByteArray()
         return Base64.encodeToString(byteArray, Base64.DEFAULT)
     }
+
+
 
     private fun uploadFoto(bitmap: Bitmap, userId: String) {
         val base64Image = bitmapToBase64(bitmap)
@@ -144,30 +132,32 @@ class CamaraActivity : AppCompatActivity() {
         call.enqueue(object : Callback<UserRequest> {
             override fun onResponse(call: Call<UserRequest>, response: Response<UserRequest>) {
                 if (response.isSuccessful) {
-                    val userIdFromResponse = response.body()?.user?.id
-                    if (userIdFromResponse != null) {
-                        saveUserIdToSharedPreferences(userIdFromResponse)
-                        Toast.makeText(this@CamaraActivity, "Foto de perfil atualizada com sucesso!", Toast.LENGTH_SHORT).show()
-                    } else {
-                        // Lidar com o caso em que o ID do user é nulo
-                        Toast.makeText(this@CamaraActivity, "ID do user nulo na resposta.", Toast.LENGTH_SHORT).show()
-                    }
+                    saveUserIdToSharedPreferences(response.body()?.user?.id)
+                    Toast.makeText(this@CamaraActivity, "Foto de perfil atualizada com sucesso!", Toast.LENGTH_SHORT).show()
                 } else {
-                    // Lidar com a resposta não bem-sucedida
                     Toast.makeText(this@CamaraActivity, "Erro ao atualizar a foto do perfil. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<UserRequest>, t: Throwable) {
-                // Lidar com a falha na comunicação com o servidor
                 Toast.makeText(this@CamaraActivity, "Erro de conexão. Verifique sua conexão com a internet e tente novamente.", Toast.LENGTH_SHORT).show()
             }
         })
     }
 
+    private fun getUserIdFromSharedPreferences(): String {
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        return sharedPreferences.getString("userId", "") ?: ""
+    }
+
     private fun saveUserIdToSharedPreferences(userId: String?) {
         val editor = sharedPreferences.edit()
         editor.putString("userId", userId)
+        editor.apply()
+    }
+
+    private fun saveBase64ImageToSharedPreferences(base64Image: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("userImage", base64Image)
         editor.apply()
     }
 }

@@ -34,7 +34,7 @@ class LoginActivity : AppCompatActivity() {
         buttonLogin = findViewById(R.id.buttonLogin)
         buttonRegister = findViewById(R.id.buttonRegister)
 
-        // Preencher automaticamente o campo de e-mail se existir um e-mail salvo
+        // Preencher automaticamente o campo de e-mail se existir um e-mail guardado
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
         val savedEmail = sharedPreferences.getString("userEmail", "")
         editTextEmail.setText(savedEmail)
@@ -95,12 +95,13 @@ class LoginActivity : AppCompatActivity() {
                     if (users != null) {
                         val matchedUser = users.find { it.email == username && it.password == hashedPassword }
                         if (matchedUser != null) {
+                            saveUserIdToSharedPreferences(matchedUser.id)
                             showSuccessMessage()
                         } else {
                             showErrorMessage("Credenciais inválidas.")
                         }
                     } else {
-                        showErrorMessage("Lista de users nula.")
+                        showErrorMessage("Lista de utilizadores nula.")
                     }
                 } else {
                     showErrorMessage("Erro na chamada à API: ${response.message()}")
@@ -134,4 +135,12 @@ class LoginActivity : AppCompatActivity() {
         val bytes = MessageDigest.getInstance("SHA-256").digest(password.toByteArray())
         return bytes.joinToString("") { "%02x".format(it) }
     }
+
+    private fun saveUserIdToSharedPreferences(userId: String) {
+        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("userId", userId)
+        editor.apply()
+    }
+
 }

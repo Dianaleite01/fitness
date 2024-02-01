@@ -41,20 +41,17 @@ class MenuPrincipalActivity : AppCompatActivity() {
         calendarioCard = findViewById(R.id.calendarioCard)
         logoutCard = findViewById(R.id.logoutCard)
 
-        val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-        val userId = sharedPreferences.getString("iduser", "")
-        Log.d("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB", "BBBBBBBBBB: $userId")
-
-        // Obtém a string base64 da SharedPreferences
-        val base64Image = getBase64ImageFromSharedPreferences(userId ?: "")
+        val base64Image = getBase64ImageFromSharedPreferences()
 
         if (base64Image != null) {
             // Converte a string de base64 para Bitmap
             val bitmapImage = base64ToBitmap(base64Image)
             // Define o Bitmap na ImageView
-            fotoPerfil.setImageBitmap(bitmapImage)
-            Log.d("AAAAAAAAAAAAAAA", "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-
+            if (bitmapImage != null) {
+                fotoPerfil.setImageBitmap(bitmapImage)
+            } else {
+                Log.e("MenuPrincipalActivity", "Falha ao converter base64 para bitmap.")
+            }
         } else {
             Log.e("MenuPrincipalActivity", "Base64 da imagem não encontrado.")
             fotoPerfil.setImageResource(R.drawable.ic_launcher_foreground)
@@ -97,9 +94,9 @@ class MenuPrincipalActivity : AppCompatActivity() {
         super.onBackPressed()
     }
 
-    private fun getBase64ImageFromSharedPreferences(iduser: String): String? {
+    private fun getBase64ImageFromSharedPreferences(): String? {
         val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
-        return sharedPreferences.getString("userImage_$iduser", null)
+        return sharedPreferences.getString("userImage", null)
     }
 
     fun base64ToBitmap(base64String: String): Bitmap? {

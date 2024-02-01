@@ -150,10 +150,11 @@ class RegistoActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(this@RegistoActivity, "Registo bem-sucedido!", Toast.LENGTH_SHORT).show()
 
-                    // Salvar o e-mail do usuário nas SharedPreferences após o registro
+                    // Salvar o e-mail do user nas SharedPreferences após o registo
                     val sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE)
                     val editor = sharedPreferences.edit()
                     editor.putString("userEmail", email)
+                    editor.putString("userId",uniqueID)
                     editor.apply()
 
                     // Navegar para a atividade de login
